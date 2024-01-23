@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Recipe;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Name;
 use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 
 class RecipeController extends AbstractController
@@ -71,5 +72,29 @@ class RecipeController extends AbstractController
         }
 
         return $this->json($data, Response::HTTP_OK);
+    }
+
+
+    #[Route('/recipe/show/{id}', name: "app_recipe_show_by_id", methods: ['GET'])]
+    public function showRecipeById(int $id, RecipeRepository $recipeRepository)
+    {
+        $recipe = $recipeRepository->find($id);
+        if ($recipe == null) {
+            return $this->json(['message' => 'Pas de recette avec cet id']);
+        }
+
+        $data = [
+            'id' => $recipe->getId(),
+            'name' => $recipe->getName(),
+            'ingredients' => $recipe->getIngredients(),
+            'category' => $recipe->getCategory(),
+            'desc' => $recipe->getDescription(),
+            'step' => $recipe->getStep(),
+            'number_portions' => $recipe->getNumberPortions(),
+            'cooking_time' => $recipe->getCookingTime(),
+            'userID' => $recipe->getUserID()
+        ];
+
+        return $this->json($data);
     }
 }
