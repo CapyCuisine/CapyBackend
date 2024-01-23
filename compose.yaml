@@ -1,5 +1,7 @@
 services:
   postgresql:
+    networks:
+      - capyfrontend_capynetwork
     image: postgres:latest
     restart: unless-stopped
     environment:
