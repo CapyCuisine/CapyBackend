@@ -45,7 +45,7 @@ class RecipeController extends AbstractController
 
 
         // You can customize the response based on success or failure
-        return new Response('Recipe created successfully', Response::HTTP_CREATED);
+        return $this->json(['message' => 'Recipe created successfully']);
     }
 
     #[Route('/recipe/show/all', name: "app_recipe_show_all", methods: ['GET'])]
