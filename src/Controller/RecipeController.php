@@ -7,9 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Recipe;
-use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 
 class RecipeController extends AbstractController
 {
@@ -43,33 +41,8 @@ class RecipeController extends AbstractController
         $entityManager->persist($recipe);
         $entityManager->flush();
 
-
-        // You can customize the response based on success or failure
-        return new Response('Recipe created successfully', Response::HTTP_CREATED);
-    }
-
-    #[Route('/recipe/show/all', name: "app_recipe_show_all", methods: ['GET'])]
-    public function showAllRecipe(RecipeRepository $recipeRepository): Response
-    {
-
-        $recipes = $recipeRepository->findAll();
-
-
-
-        foreach ($recipes as $recipe) {
-            $data[] = [
-                'id' => $recipe->getId(),
-                'name' => $recipe->getName(),
-                'ingredients' => $recipe->getIngredients(),
-                'category' => $recipe->getCategory(),
-                'desc' => $recipe->getDescription(),
-                'step' => $recipe->getStep(),
-                'number_portions' => $recipe->getNumberPortions(),
-                'cooking_time' => $recipe->getCookingTime(),
-                'userID' => $recipe->getUserId()
-            ];
-        }
-
-        return $this->json($data, Response::HTTP_OK);
+        return $this->json([
+            'message' => 'Recette ajoutee',
+        ]);
     }
 }

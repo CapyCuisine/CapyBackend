@@ -28,7 +28,7 @@ class RegistrationController extends AbstractController
 
             return $this->json(['message' => 'Inscription réussie!']);
         } catch (UniqueConstraintViolationException $e) {
-            return $this->json(['error' => 'Adresse e-mail deja utilisee.'], 400);
+            return $this->json(['error' => 'Adresse e-mail ou/et username deja utilisee.'], 400);
         } catch (\Exception $e) {
             return $this->json(['error' => 'Une erreur s est produite lors de l inscription.'], 500);
         }
